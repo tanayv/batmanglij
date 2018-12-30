@@ -46,7 +46,8 @@
     }
 
     .deck h1 {
-        margin: 0;
+        margin: 0 10px;
+        font-size: 1.4rem;
     }
 
     .deck hr {
@@ -58,6 +59,7 @@
         padding: 10px 10px;
         overflow-x: auto;
         min-width: 100%;
+        white-space: nowrap;
     }
 
 </style>

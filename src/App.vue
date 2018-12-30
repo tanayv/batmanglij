@@ -1,8 +1,11 @@
 <template>
   <div id="app">
-    <Nav/>
-    <Feed/>
-    <Deck/>
+    <div class="game" v-if="user != ''">
+      <Nav/>
+      <Feed/>
+      <Deck/>
+    </div>
+    <LoginWall v-if="user == ''" v-on:register-user="storeUserInfo"/>
   </div>
 </template>
 
@@ -10,13 +13,27 @@
 import Nav from "./components/Nav.vue";
 import Feed from "./components/Feed.vue";
 import Deck from "./components/Deck.vue";
+import LoginWall from "./components/LoginWall.vue";
 
 export default {
   name: "app",
   components: {
     Nav,
     Feed,
-    Deck
+    Deck,
+    LoginWall
+  },
+  data() {
+    return {
+      user: '',
+      flare: '',
+      deck: []
+    }
+  },
+  methods: {
+    storeUserInfo: function(userName) {
+      this.user = userName;
+    }
   }
 };
 </script>

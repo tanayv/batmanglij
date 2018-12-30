@@ -28,6 +28,7 @@
         background-color: #fff;
         position: relative;
         display: inline-block;
+        white-space: initial;
     }
 
     .button-card p.text {
@@ -47,7 +48,7 @@
         width: 80%;
         background: #304960;
         color: #fff;
-        font-size: 1.1rem;
+        font-size: 1rem;
         border-radius: 5px;
         padding: 5px;
         margin: 0 auto;
