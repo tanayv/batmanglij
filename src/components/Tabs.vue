@@ -3,6 +3,11 @@
         <div class="tabs">
             <div class="tab">Live</div>
             <div class="tab">Scoreboard</div>
+            <div class="tab user">
+                <div class="flare">
+                </div>
+                {{ user }}
+            </div>
         </div>
     </div>
 </template>
@@ -10,7 +15,8 @@
 <script>
 
     export default {
-        name: 'tabs'
+        name: 'tabs',
+        props: ['user', 'tabIndex']
     }
 
 </script>
@@ -20,7 +26,6 @@
         background: #00bc7e;
         color: #fff;
         padding: 10px;
-        height: 60px;
         width: 100%;
         position: relative;
         box-shadow: 0px 1px 5px 0px #1a1a1a3d
@@ -38,6 +43,15 @@
         font-size: 1.3rem;
         line-height: 2rem;
         padding: 0 20px;
-        font-weight: 600;
+        width: calc(100% / 3);
+        text-align: center;
+        border-bottom: 1px solid #00bc7e;
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    .tab.user {
+        text-transform: capitalize;
+        text-align: left;
     }
 </style>

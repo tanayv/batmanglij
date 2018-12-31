@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="game" v-if="user != ''">
-      <Tabs/>
+      <Tabs v-bind:user="user"/>
       <Feed/>
       <Deck v-bind:cards="deck"/>
     </div>

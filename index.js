@@ -2,9 +2,9 @@ const express = require('express');
 const path = require('path');
 const PORT = process.env.PORT || 3001;
 const app = express();
+const cardManager = require("./cards");
 
-
-app.use("/api", require("./cards"));
+app.use("/api", cardManager.router);
 app.use(express.static(path.join(__dirname, "dist")));
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
@@ -30,6 +30,10 @@ let state = {
 
 const io = require('socket.io')(server);
 io.on('connection', function(socket) {
+
+    /* Draw a black card at the start of the game */
+    state.cards.black = cardManager.drawBlackCard();
+
     socket.on('SEND_MESSAGE', function(data) {
         io.emit('MESSAGE', data)
     });
@@ -41,3 +45,4 @@ io.on('connection', function(socket) {
     });
 
 });
+
