@@ -4,10 +4,8 @@
             <h1>Deck</h1>
             <hr/>
             <div class="card-holder">
-                <ButtonCard/>
-                <ButtonCard/>
-                <ButtonCard/>
-                <ButtonCard/>
+                    <ButtonCard v-for="card of cards" :key="card.text" v-bind:text="card.text"/>
+                </div>
             </div>
         </div>
     </div>
@@ -19,6 +17,7 @@
 
     export default {
         name: "deck",
+        props: ['cards'],
         components: {
             ButtonCard
         }

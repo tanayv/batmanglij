@@ -3,6 +3,8 @@ const path = require('path');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+
+app.use("/api", require("./cards"));
 app.use(express.static(path.join(__dirname, "dist")));
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
@@ -34,6 +36,7 @@ io.on('connection', function(socket) {
 
     socket.on('REGISTER_USER', function(data) {
         console.log("Registering user: " + data.user);
+        state.players.push(data.user)
         io.emit('UPDATE_UI', JSON.stringify(state))
     });
 

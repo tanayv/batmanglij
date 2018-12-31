@@ -1,7 +1,7 @@
 <template>
     <div class="button-card">
         <p class="text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+            {{ text }} 
         </p>
         <p class="button-holder">
             <button>Select</button>
@@ -13,7 +13,8 @@
 <script>
 
     export default {
-        name: "button-card"
+        name: "button-card",
+        props: ['text']
     }
     
 </script>
@@ -29,6 +30,7 @@
         position: relative;
         display: inline-block;
         white-space: initial;
+        vertical-align: top;
     }
 
     .button-card p.text {

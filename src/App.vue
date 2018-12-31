@@ -3,7 +3,7 @@
     <div class="game" v-if="user != ''">
       <Tabs/>
       <Feed/>
-      <Deck/>
+      <Deck v-bind:cards="deck"/>
     </div>
     <LoginWall v-if="user == ''" v-on:register-user="storeUserInfo"/>
   </div>
@@ -12,6 +12,7 @@
 <script>
 
   import io from 'socket.io-client';
+  import axios from 'axios';
 
   import Tabs from "./components/Tabs.vue";
   import Feed from "./components/Feed.vue";
@@ -45,12 +46,25 @@
             user: this.user
         });
 
+        axios.get("/api/draw/white/full")
+          .then(
+            response => {
+              console.log("Cards Drawn", response);
+              this.deck = response.data
+            }
+          ).catch(
+            error => {
+              console.log("Error", error);
+            }
+          )
+
 
       }
     },
     mounted() {
         this.socket.on('UPDATE_UI', function(data) {
-            this.state = JSON.parse(data.state);
+            this.state = JSON.parse(data);
+            console.log(data)
         });
     }
   };
