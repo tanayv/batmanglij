@@ -12,11 +12,29 @@ const server = app.listen(PORT, function() {
     console.log('server running on ' + PORT);
 });
 
+let state = {
+    players: [
+
+    ],
+    cards: {
+        black: {
+
+        },
+        white: [{
+
+        }]
+    }
+}
 
 const io = require('socket.io')(server);
-
 io.on('connection', function(socket) {
     socket.on('SEND_MESSAGE', function(data) {
         io.emit('MESSAGE', data)
     });
+
+    socket.on('REGISTER_USER', function(data) {
+        console.log("Registering user: " + data.user);
+        io.emit('UPDATE_UI', JSON.stringify(state))
+    });
+
 });

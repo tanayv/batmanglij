@@ -10,7 +10,7 @@
                   <label for="user">User:</label>
                   <input type="text" v-model="user" class="form-control">
               </div>
-              <button type="submit" class="btn btn-success">Send</button>
+              <button type="submit" class="btn btn-success">Join</button>
           </form>
 
         </div>

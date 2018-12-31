@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="game" v-if="user != ''">
-      <Nav/>
+      <Tabs/>
       <Feed/>
       <Deck/>
     </div>
@@ -10,32 +10,50 @@
 </template>
 
 <script>
-import Nav from "./components/Nav.vue";
-import Feed from "./components/Feed.vue";
-import Deck from "./components/Deck.vue";
-import LoginWall from "./components/LoginWall.vue";
 
-export default {
-  name: "app",
-  components: {
-    Nav,
-    Feed,
-    Deck,
-    LoginWall
-  },
-  data() {
-    return {
-      user: '',
-      flare: '',
-      deck: []
+  import io from 'socket.io-client';
+
+  import Tabs from "./components/Tabs.vue";
+  import Feed from "./components/Feed.vue";
+  import Deck from "./components/Deck.vue";
+  import LoginWall from "./components/LoginWall.vue";
+
+  export default {
+    name: "app",
+    components: {
+      Tabs,
+      Feed,
+      Deck,
+      LoginWall
+    },
+    data() {
+      return {
+        user: '',
+        flare: '',
+        deck: [],
+        state: {},
+        socket: io()
+      }
+    },
+    methods: {
+      storeUserInfo: function(userName) {
+        this.user = userName;
+        
+        /* Send socket message to register user */
+        console.log("REGISTER_USER");
+        this.socket.emit('REGISTER_USER', {
+            user: this.user
+        });
+
+
+      }
+    },
+    mounted() {
+        this.socket.on('UPDATE_UI', function(data) {
+            this.state = JSON.parse(data.state);
+        });
     }
-  },
-  methods: {
-    storeUserInfo: function(userName) {
-      this.user = userName;
-    }
-  }
-};
+  };
 </script>
 
 <style>

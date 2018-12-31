@@ -35,7 +35,7 @@ export default {
             user: '',
             message: '',
             messages: [],
-            socket : io()
+            socket: io()
         }
     },
     methods: {
