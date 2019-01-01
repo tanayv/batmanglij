@@ -32,7 +32,7 @@
         user: '',
         flare: '',
         deck: [],
-        state: {"players":["Tanay"],"cards":{"black":{"deck":"bw","icon":"","text":"What is bishk eating for dinner today?"},"white":[{}]}},
+        state: {},
         socket: io()
       }
     },
@@ -64,9 +64,10 @@
     },
     mounted() {
         console.log("Initial State", this.state);
+
         this.socket.on('UPDATE_UI', function(data) {
 
-            //Vue.set(this.state, JSON.parse(data))
+            this.state = JSON.parse()
             console.log("Final State", this.state)
         });
     }

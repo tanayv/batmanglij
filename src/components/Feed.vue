@@ -16,7 +16,7 @@
         props: ['cards'],
         components: {
             Card
-        }
+        },
     }
 
     /**
