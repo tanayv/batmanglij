@@ -6,7 +6,8 @@
     "start": "node index.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "putain": "npm run build && npm start"
   },
   "dependencies": {
     "axios": "^0.18.0",

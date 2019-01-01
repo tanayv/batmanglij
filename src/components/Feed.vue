@@ -1,8 +1,7 @@
 <template>
     <div class="feed">
-        <Card color="black"/>
+        <Card color="black" v-bind:text="cards.black.text"/>
         <hr/>
-        <Card color="white"/>
         <Card color="white"/>
     </div>
 </template>
@@ -14,10 +13,16 @@
 
     export default {
         name: "feed",
+        props: ['cards'],
         components: {
             Card
         }
     }
+
+    /**
+     * {"players":["Tanay"],"cards":{"black":{"deck":"bw","icon":"","text":"What is bishk eating for dinner today?"},"white":[{}]}}
+
+     */
 </script>
 
 <style>

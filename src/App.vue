@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <div class="game" v-if="user != ''">
-      <Tabs v-bind:user="user"/>
-      <Feed/>
-      <Deck v-bind:cards="deck"/>
+      <Tabs :user="user"/>
+      <Feed v-if="state.cards" :cards="state.cards"/>
+      <Deck :cards="deck"/>
     </div>
     <LoginWall v-if="user == ''" v-on:register-user="storeUserInfo"/>
   </div>
@@ -32,7 +32,7 @@
         user: '',
         flare: '',
         deck: [],
-        state: {},
+        state: {"players":["Tanay"],"cards":{"black":{"deck":"bw","icon":"","text":"What is bishk eating for dinner today?"},"white":[{}]}},
         socket: io()
       }
     },
@@ -57,14 +57,17 @@
               console.log("Error", error);
             }
           )
-
-
+      },
+      updateGameState: function(newState) {
+        this.state = newState;
       }
     },
     mounted() {
+        console.log("Initial State", this.state);
         this.socket.on('UPDATE_UI', function(data) {
-            this.state = JSON.parse(data);
-            console.log(data)
+
+            //Vue.set(this.state, JSON.parse(data))
+            console.log("Final State", this.state)
         });
     }
   };
@@ -94,6 +97,11 @@
     height: 100%;
     overflow: hidden;
     position: relative;
+  }
+
+  .game {
+    width: 100%;
+    height: 100%;
   }
 
 

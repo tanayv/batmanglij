@@ -1,7 +1,10 @@
 <template>
     <div class="horizontal-shadow-limiter">
-        <div class="deck">
-            <h1>Deck</h1>
+        <div class="deck" v-bind:class="{'collapsed': collapsed}">
+            <div class="header">
+                <h1>Deck</h1>
+                <div class="collapser" v-on:click="toggleDeck()">✕</div>
+            </div>
             <hr/>
             <div class="card-holder">
                     <ButtonCard v-for="card of cards" :key="card.text" v-bind:text="card.text"/>
@@ -20,6 +23,16 @@
         props: ['cards'],
         components: {
             ButtonCard
+        },
+        data() {
+            return {
+                collapsed: false
+            }
+        },
+        methods: {
+            toggleDeck: function() {
+                this.collapsed = !this.collapsed
+            }
         }
     }
 
@@ -42,11 +55,31 @@
         width: 100%;
         box-shadow: 0px -1px 5px 0px #1a1a1a3d;
         padding: 10px 20px;
+        transition: all 0.1s ease;
+    }
+
+    .deck.collapsed {
+        bottom: -250px;
+    }
+
+    .deck.collapsed .card-holder {
+        display: none;
+    }
+
+    .deck .header {
+        height: 50px;
     }
 
     .deck h1 {
         margin: 0 10px;
         font-size: 1.4rem;
+    }
+
+    .deck .collapser {
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        cursor: pointer;
     }
 
     .deck hr {

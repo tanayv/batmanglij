@@ -55,4 +55,9 @@
         padding: 5px;
         margin: 0 auto;
     }
+
+    .button-card button:hover {
+        background: #285e91;
+        cursor: pointer;
+    }
 </style>

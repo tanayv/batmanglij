@@ -25,7 +25,7 @@
     .nav {
         background: #00bc7e;
         color: #fff;
-        padding: 10px;
+        height: 60px;
         width: 100%;
         position: relative;
         box-shadow: 0px 1px 5px 0px #1a1a1a3d
@@ -52,6 +52,6 @@
 
     .tab.user {
         text-transform: capitalize;
-        text-align: left;
+        text-align: right;
     }
 </style>
