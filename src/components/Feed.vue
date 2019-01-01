@@ -1,6 +1,6 @@
 <template>
     <div class="feed">
-        <Card color="black" v-bind:text="cards.black.text"/>
+        <Card color="black" :text="cards.black.text"/>
         <hr/>
         <Card color="white"/>
     </div>
@@ -8,7 +8,7 @@
 
 
 <script>
-
+    import { mapState } from 'vuex'
     import Card from "./Card.vue"
 
     export default {
@@ -17,6 +17,10 @@
         components: {
             Card
         },
+        computed: {
+            ...mapState(['cards'])
+        }
+        
     }
 
     /**

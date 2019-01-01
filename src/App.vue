@@ -2,7 +2,7 @@
   <div id="app">
     <div class="game" v-if="user != ''">
       <Tabs :user="user"/>
-      <Feed v-if="state.cards" :cards="state.cards"/>
+      <Feed/>
       <Deck :cards="deck"/>
     </div>
     <LoginWall v-if="user == ''" v-on:register-user="storeUserInfo"/>
@@ -13,6 +13,8 @@
 
   import io from 'socket.io-client';
   import axios from 'axios';
+
+  import { mapActions } from 'vuex'
 
   import Tabs from "./components/Tabs.vue";
   import Feed from "./components/Feed.vue";
@@ -32,7 +34,6 @@
         user: '',
         flare: '',
         deck: [],
-        state: {},
         socket: io()
       }
     },
@@ -58,17 +59,14 @@
             }
           )
       },
-      updateGameState: function(newState) {
-        this.state = newState;
-      }
+      ...mapActions(['SET_BLACK_CARD'])
     },
     mounted() {
-        console.log("Initial State", this.state);
-
+        let SET_BLACK_CARD_Instance = this.SET_BLACK_CARD;
         this.socket.on('UPDATE_UI', function(data) {
-
-            this.state = JSON.parse()
-            console.log("Final State", this.state)
+          SET_BLACK_CARD_Instance({
+            text: JSON.parse(data).cards.black.text
+          })
         });
     }
   };
