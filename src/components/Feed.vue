@@ -22,11 +22,6 @@
         }
         
     }
-
-    /**
-     * {"players":["Tanay"],"cards":{"black":{"deck":"bw","icon":"","text":"What is bishk eating for dinner today?"},"white":[{}]}}
-
-     */
 </script>
 
 <style>
