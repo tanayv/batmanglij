@@ -4,7 +4,7 @@
             {{ text }} 
         </p>
         <p class="button-holder">
-            <button>Select</button>
+            <button v-on:click="selectCard()">Select</button>
         </p>
     </div>
 </template>
@@ -14,7 +14,13 @@
 
     export default {
         name: "button-card",
-        props: ['text']
+        props: ['text'],
+        methods: {
+            selectCard: function(e) {
+                console.log("Card has been selected", this.text);
+                this.$emit('card-selected', this.text);
+            }
+        }
     }
     
 </script>

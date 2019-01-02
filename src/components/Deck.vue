@@ -7,7 +7,7 @@
             </div>
             <hr/>
             <div class="card-holder">
-                    <ButtonCard v-for="card of cards" :key="card.text" v-bind:text="card.text"/>
+                    <ButtonCard v-for="card of cards" :key="card.text" v-bind:text="card.text" v-on:card-selected="SELECT_WHITE_CARD"/>
                 </div>
             </div>
         </div>
@@ -16,7 +16,8 @@
 
 <script>
 
-    import ButtonCard from "./ButtonCard.vue"
+    import { mapActions } from 'vuex';
+    import ButtonCard from "./ButtonCard.vue";
 
     export default {
         name: "deck",
@@ -32,7 +33,8 @@
         methods: {
             toggleDeck: function() {
                 this.collapsed = !this.collapsed
-            }
+            },
+            ...mapActions(['SELECT_WHITE_CARD'])
         }
     }
 

@@ -1,6 +1,6 @@
 <template>
     <div class="feed">
-        <Card color="black" :text="cards.black.text"/>
+        <Card color="black" :text="game.cards.black.text"/>
         <hr/>
         <Card color="white"/>
     </div>
@@ -13,12 +13,11 @@
 
     export default {
         name: "feed",
-        props: ['cards'],
         components: {
             Card
         },
         computed: {
-            ...mapState(['cards'])
+            ...mapState(['game'])
         }
         
     }

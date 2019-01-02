@@ -42,10 +42,10 @@
         this.user = userName;
         
         /* Send socket message to register user */
-        console.log("REGISTER_USER");
         this.socket.emit('REGISTER_USER', {
             user: this.user
         });
+        this.STORE_USER_DATA(userName);
 
         axios.get("/api/draw/white/full")
           .then(
@@ -59,7 +59,7 @@
             }
           )
       },
-      ...mapActions(['SET_BLACK_CARD'])
+      ...mapActions(['SET_BLACK_CARD', 'STORE_USER_DATA'])
     },
     mounted() {
         let SET_BLACK_CARD_Instance = this.SET_BLACK_CARD;
