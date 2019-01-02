@@ -22,18 +22,12 @@ let state = {
         black: {
 
         },
-        white: [{
-
-        }]
+        white: []
     }
 }
 
 const io = require('socket.io')(server);
 io.on('connection', function(socket) {
-
-    socket.on('SEND_MESSAGE', function(data) {
-        io.emit('MESSAGE', data)
-    });
 
     socket.on('REGISTER_USER', function(data) {
         console.log("Registering user: " + data.user);
@@ -42,18 +36,18 @@ io.on('connection', function(socket) {
             czar: false,
             score: 0
         });
-        io.emit('UPDATE_UI', JSON.stringify(state))
 
         if (state.players.length == 2)
             startGame();
+        
+        io.emit('UPDATE_UI', JSON.stringify(state))
     });
 
     socket.on('SELECT_CARD', function(data) {
-        console.log("Received card: " + data.cardText + " from user in slot " + data.senderSlot);
-        state.cards.white.push({
-            text: data.cardText,
-            senderSlot: data.senderSlot
-        });
+        console.log(data);
+        console.log("Received card: " + JSON.parse(data).text + " from user " + JSON.parse(data).sender);
+        state.cards.white.push(JSON.parse(data));
+        io.emit('UPDATE_UI', JSON.stringify(state));
     })
 
     socket.on('DECLARE_WINNER', function(data) {

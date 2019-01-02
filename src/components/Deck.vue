@@ -7,7 +7,7 @@
             </div>
             <hr/>
             <div class="card-holder">
-                    <ButtonCard v-for="card of cards" :key="card.text" v-bind:text="card.text" v-on:card-selected="SELECT_WHITE_CARD"/>
+                    <ButtonCard v-for="card of cards" :key="card.text" v-bind:text="card.text" v-on:card-selected="selectWhiteCard"/>
                 </div>
             </div>
         </div>
@@ -16,7 +16,7 @@
 
 <script>
 
-    import { mapActions } from 'vuex';
+    import { mapActions, mapState } from 'vuex';
     import ButtonCard from "./ButtonCard.vue";
 
     export default {
@@ -24,6 +24,9 @@
         props: ['cards'],
         components: {
             ButtonCard
+        },
+        computed: {
+            ...mapState(['user'])
         },
         data() {
             return {
@@ -34,7 +37,18 @@
             toggleDeck: function() {
                 this.collapsed = !this.collapsed
             },
-            ...mapActions(['SELECT_WHITE_CARD'])
+            selectWhiteCard: function(data) {
+                let payload = {
+                    text: data,
+                    sender: this.user
+                };
+                this.$socket.emit("SELECT_CARD", JSON.stringify(payload));
+            }
+        },
+        sockets: {
+            connect: function () {
+                console.log('socket connected')
+            }
         }
     }
 

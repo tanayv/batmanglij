@@ -2,7 +2,7 @@
     <div class="feed">
         <Card color="black" :text="game.cards.black.text"/>
         <hr/>
-        <Card color="white"/>
+        <Card color="white" v-for="card of game.cards.white" :key="card.text" v-bind:text="card.text"/>
     </div>
 </template>
 

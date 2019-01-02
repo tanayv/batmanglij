@@ -6,7 +6,6 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: "",
-    socket: null,
     game: {
       players: [],
       cards: {
@@ -18,35 +17,30 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    connectSocket: (state, payload) => {
-      state.socket = payload.socket;
-    },
     setBlackCard: (state, payload) => {
+      console.log("Prev game black crd", state.game.cards.black.text);
       state.game.cards.black.text = payload.text;
+      console.log("Final game black crd", state.game.cards.black.text);
     },
     storeUserData: (state, payload) => {
-      state.user = payload.name;
+      state.user = payload;
     },
-    selectWhiteCard: (state, payload) => {
-      state.game.cards.white.push({
-        text: payload.text,
-        sender: state.user
-      });
+    renderWhiteCard: (state, payload) => {
+      state.game.cards.white = payload;
     }
   },
   actions: {
-    CONNECT_SOCKET: (context, payload) => {
-      context.commit("connectSocket", payload);
-    },
     SET_BLACK_CARD: (context, payload) => {
+      console.log("ACTION CALL: SET_BLACK_CARD", payload);
       context.commit("setBlackCard", payload);
     },
     STORE_USER_DATA: (context, payload) => {
+      console.log("ACTION CALL: STORE_USER_DATA", payload);
       context.commit("storeUserData", payload);
     },
-    SELECT_WHITE_CARD: (context, payload) => {
-      context.commit("selectWhiteCard", payload);
-      console.log("Selected card", payload);
+    RENDER_WHITE_CARD: (context, payload) => {
+      context.commit("renderWhiteCard", payload);
+      console.log("ACTION CALL: RENDER WHITE CARD", payload);
     }
   }
 })

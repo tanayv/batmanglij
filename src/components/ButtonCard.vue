@@ -17,7 +17,6 @@
         props: ['text'],
         methods: {
             selectCard: function(e) {
-                console.log("Card has been selected", this.text);
                 this.$emit('card-selected', this.text);
             }
         }

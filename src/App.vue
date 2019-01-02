@@ -1,11 +1,11 @@
 <template>
   <div id="app">
+    <LoginWall v-if="user == ''" v-on:register-user="storeUserInfo"/>
     <div class="game" v-if="user != ''">
       <Tabs :user="user"/>
       <Feed/>
       <Deck :cards="deck"/>
     </div>
-    <LoginWall v-if="user == ''" v-on:register-user="storeUserInfo"/>
   </div>
 </template>
 
@@ -59,14 +59,18 @@
             }
           )
       },
-      ...mapActions(['SET_BLACK_CARD', 'STORE_USER_DATA'])
+      ...mapActions(['SET_BLACK_CARD', 'STORE_USER_DATA', 'RENDER_WHITE_CARD'])
     },
     mounted() {
         let SET_BLACK_CARD_Instance = this.SET_BLACK_CARD;
+        let RENDER_WHITE_CARD_Instance = this.RENDER_WHITE_CARD;
+
         this.socket.on('UPDATE_UI', function(data) {
+          console.log(data);
           SET_BLACK_CARD_Instance({
             text: JSON.parse(data).cards.black.text
-          })
+          });
+          RENDER_WHITE_CARD_Instance(JSON.parse(data).cards.white);
         });
     }
   };
