@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    activeTabIndex: 0,
     user: "",
     czar: false,
     deck: [],
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    setActiveTabIndex: (state, payload) => {
+      state.activeTabIndex = payload;
+    },
     setBlackCard: (state, payload) => {
       state.game.cards.black.text = payload.text;
     },
@@ -40,6 +44,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    SET_ACTIVE_TAB_INDEX: (context, payload) => {
+      context.commit("setActiveTabIndex", payload);
+    },
     SET_BLACK_CARD: (context, payload) => {
       console.log("ACTION CALL: SET_BLACK_CARD", payload);
       context.commit("setBlackCard", payload);

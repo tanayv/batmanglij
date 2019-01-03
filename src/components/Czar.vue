@@ -1,20 +1,27 @@
 <template>
-    <div class="feed">
-        <CzarCard color="black" :text="game.cards.black.text"/>
-        <hr/>
-        <CzarCard color="white" v-for="card of game.cards.white" :key="card.text" :text="card.text" :sender="card.sender" v-on:card-selected="declareRoundWinner"/>
+    <div class="czar-container">
+        <Navigation/>
+        <div class="feed">
+            <CzarCard color="black" :text="game.cards.black.text"/>
+            <hr/>
+            <CzarCard color="white" v-for="card of game.cards.white" :key="card.text" :text="card.text" :sender="card.sender" v-on:card-selected="declareRoundWinner"/>
+        </div>
     </div>
 </template>
 
 <script>
 
     import { mapActions, mapState } from 'vuex';
+
     import CzarCard from "./CzarCard.vue";
+    import Navigation from "./Navigation.vue";
+    
 
     export default {
         name: 'Czar',
         components: {
-            CzarCard
+            CzarCard,
+            Navigation
         },
         computed: {
             ...mapState(['game'])
@@ -35,5 +42,8 @@
 </script>
 
 <style>
-
+    .czar-container {
+        height: 100%;
+        width: 100%;
+    }
 </style>

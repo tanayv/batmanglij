@@ -4,7 +4,7 @@
     <WaitingRoom v-if="user != '' && game.cards.black.text == ''"/>
     <Czar v-if="czar"/>
     <div class="game" v-if="user != '' && game.cards.black.text != '' && !czar">
-      <Tabs :user="user"/>
+      <Navigation/>
       <Feed/>
       <Deck :cards="deck"/>
     </div>
@@ -17,7 +17,7 @@
 
   import { mapActions, mapState } from 'vuex'
 
-  import Tabs from "./components/Tabs.vue";
+  import Navigation from "./components/Navigation.vue";
   import Feed from "./components/Feed.vue";
   import Deck from "./components/Deck.vue";
   import LoginWall from "./components/LoginWall.vue";
@@ -27,7 +27,7 @@
   export default {
     name: "app",
     components: {
-      Tabs,
+      Navigation,
       Feed,
       Deck,
       LoginWall,
