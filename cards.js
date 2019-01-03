@@ -5,7 +5,15 @@ const pack = require("./pack.json");
 /** @todo: Randomize card draws while keeping track of already used cards */
 
 router.get("/draw/white/full", (req, res) => {
-    res.json(pack.white);
+
+    let deck = [];
+    for (let card of pack.white) {
+        if (deck.length < 6) {
+            deck.push(card);
+        }
+    }
+
+    res.json(deck);
 })
 
 const drawBlackCard = () => {

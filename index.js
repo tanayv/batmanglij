@@ -20,7 +20,7 @@ let state = {
     ],
     cards: {
         black: {
-
+            text: ""
         },
         white: []
     }

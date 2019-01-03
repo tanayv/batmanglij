@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <LoginWall v-if="user == ''" v-on:register-user="storeUserInfo"/>
-    <div class="game" v-if="user != ''">
+    <WaitingRoom v-if="user != '' && game.cards.black.text == ''"/>
+    <div class="game" v-if="user != '' && game.cards.black.text != ''">
       <Tabs :user="user"/>
       <Feed/>
       <Deck :cards="deck"/>
@@ -11,15 +12,15 @@
 
 <script>
 
-  import io from 'socket.io-client';
   import axios from 'axios';
 
-  import { mapActions } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
 
   import Tabs from "./components/Tabs.vue";
   import Feed from "./components/Feed.vue";
   import Deck from "./components/Deck.vue";
   import LoginWall from "./components/LoginWall.vue";
+  import WaitingRoom from "./components/WaitingRoom.vue";
 
   export default {
     name: "app",
@@ -27,23 +28,18 @@
       Tabs,
       Feed,
       Deck,
-      LoginWall
+      LoginWall,
+      WaitingRoom
     },
-    data() {
-      return {
-        user: '',
-        flare: '',
-        deck: [],
-        socket: io()
-      }
+    computed: {
+      ...mapState(['user', 'game', 'deck'])
     },
     methods: {
       storeUserInfo: function(userName) {
-        this.user = userName;
-        
+
         /* Send socket message to register user */
-        this.socket.emit('REGISTER_USER', {
-            user: this.user
+        this.$socket.emit('REGISTER_USER', {
+            user: userName
         });
         this.STORE_USER_DATA(userName);
 
@@ -51,27 +47,24 @@
           .then(
             response => {
               console.log("Cards Drawn", response);
-              this.deck = response.data
+              this.STORE_DECK(response.data);
             }
           ).catch(
             error => {
-              console.log("Error", error);
+              console.log("Error drawing cards", error);
             }
           )
       },
-      ...mapActions(['SET_BLACK_CARD', 'STORE_USER_DATA', 'RENDER_WHITE_CARD'])
+      ...mapActions(['SET_BLACK_CARD', 'STORE_USER_DATA', 'RENDER_WHITE_CARD', 'STORE_DECK'])
     },
-    mounted() {
-        let SET_BLACK_CARD_Instance = this.SET_BLACK_CARD;
-        let RENDER_WHITE_CARD_Instance = this.RENDER_WHITE_CARD;
-
-        this.socket.on('UPDATE_UI', function(data) {
+    sockets: {
+      UPDATE_UI: function (data) {
           console.log(data);
-          SET_BLACK_CARD_Instance({
+          this.SET_BLACK_CARD({
             text: JSON.parse(data).cards.black.text
           });
-          RENDER_WHITE_CARD_Instance(JSON.parse(data).cards.white);
-        });
+          this.RENDER_WHITE_CARD(JSON.parse(data).cards.white);
+      }
     }
   };
 </script>
