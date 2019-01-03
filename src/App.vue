@@ -21,6 +21,7 @@
   import Deck from "./components/Deck.vue";
   import LoginWall from "./components/LoginWall.vue";
   import WaitingRoom from "./components/WaitingRoom.vue";
+  import Czar from './components/Czar.vue';
 
   export default {
     name: "app",
@@ -29,7 +30,8 @@
       Feed,
       Deck,
       LoginWall,
-      WaitingRoom
+      WaitingRoom,
+      Czar
     },
     computed: {
       ...mapState(['user', 'game', 'deck'])
@@ -55,6 +57,9 @@
             }
           )
       },
+      checkIfUserIsCzar: function() {
+
+      },
       ...mapActions(['SET_BLACK_CARD', 'STORE_USER_DATA', 'RENDER_WHITE_CARD', 'STORE_DECK'])
     },
     sockets: {
@@ -64,6 +69,7 @@
             text: JSON.parse(data).cards.black.text
           });
           this.RENDER_WHITE_CARD(JSON.parse(data).cards.white);
+          this.checkIfUserIsCzar();
       }
     }
   };
@@ -93,6 +99,12 @@
     height: 100%;
     overflow: hidden;
     position: relative;
+  }
+
+  @media (min-width: 320px) and (max-width: 480px) {
+    #app {
+      width: 100%;
+    }
   }
 
   .game {

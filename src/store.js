@@ -19,9 +19,7 @@ export default new Vuex.Store({
   },
   mutations: {
     setBlackCard: (state, payload) => {
-      console.log("Prev game black crd", state.game.cards.black.text);
       state.game.cards.black.text = payload.text;
-      console.log("Final game black crd", state.game.cards.black.text);
     },
     storeUserData: (state, payload) => {
       state.user = payload;
