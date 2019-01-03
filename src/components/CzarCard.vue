@@ -1,9 +1,9 @@
 <template>
-    <div class="button-card">
+    <div :class="['czar-card', color]">
         <p class="text">
             {{ text }} 
         </p>
-        <p class="button-holder">
+        <p class="button-holder" v-if="color != 'black'">
             <button v-on:click="selectCard()">Select</button>
         </p>
     </div>
@@ -14,7 +14,7 @@
 
     export default {
         name: "button-card",
-        props: ['text', 'sender'],
+        props: ['text', 'sender', 'color'],
         methods: {
             selectCard: function(e) {
                 this.$emit('card-selected', {
@@ -28,7 +28,7 @@
 </script>
 
 <style>
-    .button-card {
+    .czar-card {
         width: 100%;
         height: 200px;
         box-shadow: 0px 1px 5px 0px #1a1a1a3d;
@@ -41,12 +41,21 @@
         vertical-align: top;
     }
 
-    .button-card p.text {
+    .czar-card.black {
+        background-color: #3a3a3a;
+        color: #fff;
+    }
+
+    .czar-card.white {
+        background-color: #fff;
+    }
+
+    .czar-card p.text {
         margin: 0;
         padding: 10px;
     }
 
-    .button-card p.button-holder {
+    .czar-card p.button-holder {
         text-align: center;
         position: absolute;
         bottom: 10px;
@@ -54,7 +63,7 @@
         margin: 0;
     }
 
-    .button-card button {
+    .czar-card button {
         width: 80%;
         background: #304960;
         color: #fff;
@@ -64,7 +73,7 @@
         margin: 0 auto;
     }
 
-    .button-card button:hover {
+    .czar-card button:hover {
         background: #285e91;
         cursor: pointer;
     }

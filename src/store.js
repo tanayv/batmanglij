@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: "",
+    czar: false,
     deck: [],
     game: {
       players: [],
@@ -28,8 +29,14 @@ export default new Vuex.Store({
       state.deck = payload;
       console.log("Deck stored: ", state.deck);
     },
+    storePlayerList: (state, payload) => {
+      state.game.players = payload;
+    },
     renderWhiteCard: (state, payload) => {
       state.game.cards.white = payload;
+    },
+    updateUserCzarStatus: (state, payload) => {
+      state.czar = payload;
     }
   },
   actions: {
@@ -44,9 +51,15 @@ export default new Vuex.Store({
     STORE_DECK: (context, payload) => {
       context.commit("storeDeck", payload);
     },
+    STORE_PLAYER_LIST: (context, payload) => {
+      context.commit("storePlayerList", payload);
+    },
     RENDER_WHITE_CARD: (context, payload) => {
       context.commit("renderWhiteCard", payload);
       console.log("ACTION CALL: RENDER WHITE CARD", payload);
+    },
+    UPDATE_USER_CZAR_STATUS: (context, payload) => {
+      context.commit("updateUserCzarStatus", payload);
     }
   }
 })

@@ -51,8 +51,7 @@ io.on('connection', function(socket) {
     })
 
     socket.on('DECLARE_WINNER', function(data) {
-        console.log("Round complete: Czar (Player #" + data.currentCzarSlot + ") selected Winner Player (#" + data.winnerSlot + ")");
-        startNextRound(data.currentCzarSlot, data.winnerSlot);
+        startNextRound(data.czar, data.winner);
         io.emit('UPDATE_UI', JSON.stringify(state));
     })
 
@@ -68,19 +67,34 @@ const startGame = () => {
 
 }
 
-const startNextRound = (currentCzarSlot, winnerSlot) => {
+const startNextRound = (czar, winner) => {
 
     /* Remove all cards */
     state.cards.white.length = 0;
     state.cards.black = {};
 
     /* Increase winner's score */
+    let winnerSlot = state.players.findIndex((player) => {
+        return player.name === winner
+    })
     state.players[winnerSlot].score++;
 
     /* Select next Czar */
+    let currentCzarSlot = state.players.findIndex((player) => {
+        return player.name === czar.name
+    })
     let nextCzarSlot = currentCzarSlot + 1;
     if (nextCzarSlot >= state.players.length)
         nextCzarSlot = 0;
+
+    console.log("Processing new round creation request");
+    console.log({
+        "playerList": state.players,
+        "czar": czar,
+        "winner": winner, 
+        "currentCzarSlot": currentCzarSlot,
+        "nextCzarSlot": nextCzarSlot
+    })
 
     state.players[currentCzarSlot].czar = false;
     state.players[nextCzarSlot].czar = true;

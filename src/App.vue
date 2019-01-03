@@ -2,7 +2,8 @@
   <div id="app">
     <LoginWall v-if="user == ''" v-on:register-user="storeUserInfo"/>
     <WaitingRoom v-if="user != '' && game.cards.black.text == ''"/>
-    <div class="game" v-if="user != '' && game.cards.black.text != ''">
+    <Czar v-if="czar"/>
+    <div class="game" v-if="user != '' && game.cards.black.text != '' && !czar">
       <Tabs :user="user"/>
       <Feed/>
       <Deck :cards="deck"/>
@@ -34,7 +35,7 @@
       Czar
     },
     computed: {
-      ...mapState(['user', 'game', 'deck'])
+      ...mapState(['user', 'game', 'deck', 'czar'])
     },
     methods: {
       storeUserInfo: function(userName) {
@@ -57,10 +58,26 @@
             }
           )
       },
-      checkIfUserIsCzar: function() {
-
+      storePlayerList: function(playerList) {
+        this.STORE_PLAYER_LIST(playerList);
+        this.checkIfUserIsCzar(playerList);
       },
-      ...mapActions(['SET_BLACK_CARD', 'STORE_USER_DATA', 'RENDER_WHITE_CARD', 'STORE_DECK'])
+      checkIfUserIsCzar: function(playerList) {
+
+        /* Find user in list of players */
+        var userSprite = playerList.find((player) => {
+          return player.name === this.user
+        });
+
+        console.log("Active User Data from player list", userSprite);
+
+        if (userSprite.czar == true)
+          this.UPDATE_USER_CZAR_STATUS(true);
+        else
+          this.UPDATE_USER_CZAR_STATUS(false);
+      },
+      ...mapActions(['SET_BLACK_CARD', 'STORE_USER_DATA', 'RENDER_WHITE_CARD', 'STORE_DECK', 'STORE_PLAYER_LIST',
+      'UPDATE_USER_CZAR_STATUS'])
     },
     sockets: {
       UPDATE_UI: function (data) {
@@ -69,7 +86,7 @@
             text: JSON.parse(data).cards.black.text
           });
           this.RENDER_WHITE_CARD(JSON.parse(data).cards.white);
-          this.checkIfUserIsCzar();
+          this.storePlayerList(JSON.parse(data).players);
       }
     }
   };

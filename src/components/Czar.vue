@@ -22,8 +22,14 @@
         methods: {
             declareRoundWinner: function(data) {
                 console.log("Czar has selected Card '" + data.text + "' from " + data.sender);
-            },
-            ...mapActions([])
+                let czarName = this.game.players.find((player) => {
+                    return player.czar 
+                })
+                this.$socket.emit("DECLARE_WINNER", {
+                    czar: czarName,
+                    winner: data.sender
+                });
+            }
         }
     }
 </script>
