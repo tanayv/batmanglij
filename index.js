@@ -32,7 +32,7 @@ io.on('connection', function(socket) {
     socket.on('REGISTER_USER', function(data) {
         console.log("Registering user: " + data.user);
 
-        if (state.players.findIndex((player) => (player.name = data.user)) != -1) {
+        if (state.players.findIndex((player) => (player.name === data.user)) != -1) {
             console.log("User already exists, merging session...")
         }
         else {
