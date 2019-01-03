@@ -5,11 +5,6 @@ const app = express();
 const cardManager = require("./cards");
 
 app.use("/api", cardManager.router);
-app.use(express.static(path.join(__dirname, "dist")));
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
-});
-
 app.get("/restart", (req, res) => {
     state = {
         players: [
@@ -26,6 +21,12 @@ app.get("/restart", (req, res) => {
         msg: "Game restarted"
     })
 })
+app.use(express.static(path.join(__dirname, "dist")));
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+
+
 
 const server = app.listen(PORT, function() {
     console.log('server running on ' + PORT);
