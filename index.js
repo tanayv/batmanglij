@@ -10,6 +10,23 @@ app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
+app.get("/restart", (req, res) => {
+    state = {
+        players: [
+
+        ],
+        cards: {
+            black: {
+                text: ""
+            },
+            white: []
+        }
+    };
+    res.json({
+        msg: "Game restarted"
+    })
+})
+
 const server = app.listen(PORT, function() {
     console.log('server running on ' + PORT);
 });
