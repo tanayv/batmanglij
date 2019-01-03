@@ -40,7 +40,7 @@
         width: 100%;
     }
 
-    .scoreboard table tr td, .scoreboard table tr th,  {
+    .scoreboard table tr td, .scoreboard table tr th {
         padding: 5px;
         text-align: left;
     }

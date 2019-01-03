@@ -59,6 +59,7 @@
         border-radius: 5px;
         padding: 5px;
         margin: 0 auto;
+        outline: none !important;
     }
 
     .button-card button:hover {

@@ -6,9 +6,12 @@
                 <div class="collapser" v-on:click="toggleDeck()">△</div>
             </div>
             <hr/>
-            <div class="card-holder">
+            <div class="card-holder" v-if="!frozenDeck">
                     <ButtonCard v-for="card of cards" :key="card.text" v-bind:text="card.text" v-on:card-selected="selectWhiteCard"/>
                 </div>
+            </div>
+            <div class="card-holder" v-if="frozenDeck">
+                Card has been played
             </div>
         </div>
     </div>
@@ -26,7 +29,7 @@
             ButtonCard
         },
         computed: {
-            ...mapState(['user'])
+            ...mapState(['user', 'frozenDeck'])
         },
         data() {
             return {
@@ -43,7 +46,9 @@
                     sender: this.user
                 };
                 this.$socket.emit("SELECT_CARD", JSON.stringify(payload));
-            }
+                this.FREEZE_DECK(data);
+            },
+            ...mapActions(['FREEZE_DECK'])
         },
         sockets: {
             connect: function () {

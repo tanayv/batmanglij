@@ -9,6 +9,7 @@ export default new Vuex.Store({
     user: "",
     czar: false,
     deck: [],
+    frozenDeck: false,
     game: {
       players: [],
       cards: {
@@ -41,6 +42,17 @@ export default new Vuex.Store({
     },
     updateUserCzarStatus: (state, payload) => {
       state.czar = payload;
+    },
+    freezeDeck: (state, payload) => {
+      /** Remove given card from deck and prevent user from playing additional cards */
+      state.deck = state.deck.filter((card) => {
+        return card.text != payload
+      });
+      
+      state.frozenDeck = true;
+    },
+    defrostDeck: (state, payload) => {
+      state.frozenDeck = false;
     }
   },
   actions: {
@@ -67,6 +79,12 @@ export default new Vuex.Store({
     },
     UPDATE_USER_CZAR_STATUS: (context, payload) => {
       context.commit("updateUserCzarStatus", payload);
+    },
+    FREEZE_DECK: (context, payload) => {
+      context.commit("freezeDeck", payload);
+    },
+    DEFROST_DECK: (context, payload) => {
+      context.commit("defrostDeck", payload);
     }
   }
 })

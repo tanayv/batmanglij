@@ -1,6 +1,5 @@
 <template>
     <div class="czar-container">
-        <Navigation/>
         <div class="feed">
             <CzarCard color="black" :text="game.cards.black.text"/>
             <hr/>
@@ -14,14 +13,12 @@
     import { mapActions, mapState } from 'vuex';
 
     import CzarCard from "./CzarCard.vue";
-    import Navigation from "./Navigation.vue";
     
 
     export default {
         name: 'Czar',
         components: {
-            CzarCard,
-            Navigation
+            CzarCard
         },
         computed: {
             ...mapState(['game'])

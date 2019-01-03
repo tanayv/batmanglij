@@ -53,6 +53,7 @@ io.on('connection', function(socket) {
     socket.on('DECLARE_WINNER', function(data) {
         startNextRound(data.czar, data.winner);
         io.emit('UPDATE_UI', JSON.stringify(state));
+        io.emit('NEW_ROUND', JSON.stringify(state));
     })
 
 });

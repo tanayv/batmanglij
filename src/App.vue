@@ -89,7 +89,7 @@
           this.UPDATE_USER_CZAR_STATUS(false);
       },
       ...mapActions(['SET_BLACK_CARD', 'STORE_USER_DATA', 'RENDER_WHITE_CARD', 'STORE_DECK', 'STORE_PLAYER_LIST',
-      'UPDATE_USER_CZAR_STATUS'])
+      'UPDATE_USER_CZAR_STATUS', 'DEFROST_DECK'])
     },
     sockets: {
       UPDATE_UI: function (data) {
@@ -99,6 +99,9 @@
           });
           this.RENDER_WHITE_CARD(JSON.parse(data).cards.white);
           this.storePlayerList(JSON.parse(data).players);
+      },
+      NEW_ROUND: function (data) {
+        this.DEFROST_DECK();
       }
     }
   };
