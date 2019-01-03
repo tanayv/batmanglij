@@ -10,6 +10,7 @@ export default new Vuex.Store({
     czar: false,
     deck: [],
     frozenDeck: false,
+    roundWinner: {},
     game: {
       players: [],
       cards: {
@@ -56,6 +57,9 @@ export default new Vuex.Store({
     },
     replenishDeck: (state, payload) => {
       state.deck.push(payload[0]);
+    },
+    declareWinner: (state, payload) => {
+      roundWinner = payload;
     }
   },
   actions: {
@@ -91,6 +95,9 @@ export default new Vuex.Store({
     },
     REPLENISH_DECK: (context, payload) => {
       context.commit("replenishDeck", payload);
+    },
+    DECLARE_WINNER: (context, payload) => {
+      context.commit("declareWinner", payload);
     }
   }
 })

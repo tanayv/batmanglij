@@ -115,6 +115,9 @@
       },
       NEW_ROUND: function (data) {
         this.DEFROST_DECK();
+      },
+      DECLARE_WINNER: function(data) {
+        console.log("WINNER DECLARED in App.vue", data);
       }
     }
   };

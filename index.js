@@ -31,11 +31,17 @@ io.on('connection', function(socket) {
 
     socket.on('REGISTER_USER', function(data) {
         console.log("Registering user: " + data.user);
-        state.players.push({
-            name: data.user,
-            czar: false,
-            score: 0
-        });
+
+        if (state.players.findIndex((player) => (player.name = data.user)) != -1) {
+            console.log("User already exists, merging session...")
+        }
+        else {
+            state.players.push({
+                name: data.user,
+                czar: false,
+                score: 0
+            });
+        }
 
         if (state.players.length == 2)
             startGame();
@@ -72,7 +78,9 @@ const startNextRound = (czar, winner) => {
 
     /* Remove all cards */
     state.cards.white.length = 0;
-    state.cards.black = {};
+    state.cards.black = {
+        "text": ""
+    };
 
     /* Increase winner's score */
     let winnerSlot = state.players.findIndex((player) => {

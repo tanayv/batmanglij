@@ -31,5 +31,6 @@
 
     .card.white {
         background-color: #fff;
+        color: #fff;
     }
 </style>
