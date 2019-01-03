@@ -2,11 +2,21 @@
   <div id="app">
     <LoginWall v-if="user == ''" v-on:register-user="storeUserInfo"/>
     <WaitingRoom v-if="user != '' && game.cards.black.text == ''"/>
-    <Czar v-if="czar"/>
-    <div class="game" v-if="user != '' && game.cards.black.text != '' && !czar">
+
+    <div class="game" v-if="user != '' && game.cards.black.text != ''">
       <Navigation/>
-      <Feed/>
-      <Deck :cards="deck"/>
+      <div class="tab-switcher" v-if="activeTabIndex == 0">
+        <div class="czar-switcher" v-if="czar">
+            <Czar/>
+        </div>
+        <div class="czar-switcher" v-if="!czar">
+          <Feed/>
+          <Deck :cards="deck"/>
+        </div>
+      </div>
+      <div class="tab-switcher" v-if="activeTabIndex == 1">
+        <Scoreboard/>
+      </div>
     </div>
   </div>
 </template>
@@ -23,6 +33,7 @@
   import LoginWall from "./components/LoginWall.vue";
   import WaitingRoom from "./components/WaitingRoom.vue";
   import Czar from './components/Czar.vue';
+  import Scoreboard from './components/Scoreboard.vue';
 
   export default {
     name: "app",
@@ -32,10 +43,11 @@
       Deck,
       LoginWall,
       WaitingRoom,
-      Czar
+      Czar,
+      Scoreboard
     },
     computed: {
-      ...mapState(['user', 'game', 'deck', 'czar'])
+      ...mapState(['user', 'game', 'deck', 'czar', 'activeTabIndex'])
     },
     methods: {
       storeUserInfo: function(userName) {
@@ -125,6 +137,16 @@
   }
 
   .game {
+    width: 100%;
+    height: 100%;
+  }
+
+  .tab-switcher {
+    width: 100%;
+    height: 100%;
+  }
+
+  .czar-switcher {
     width: 100%;
     height: 100%;
   }

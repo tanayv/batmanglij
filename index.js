@@ -87,7 +87,7 @@ const startNextRound = (czar, winner) => {
     if (nextCzarSlot >= state.players.length)
         nextCzarSlot = 0;
 
-    console.log("Processing new round creation request");
+    console.log("Round summary:");
     console.log({
         "playerList": state.players,
         "czar": czar,

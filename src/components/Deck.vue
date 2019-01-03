@@ -3,7 +3,7 @@
         <div class="deck" v-bind:class="{'collapsed': collapsed}">
             <div class="header">
                 <h1>Deck</h1>
-                <div class="collapser" v-on:click="toggleDeck()">✕</div>
+                <div class="collapser" v-on:click="toggleDeck()">△</div>
             </div>
             <hr/>
             <div class="card-holder">
@@ -83,7 +83,7 @@
     }
 
     .deck .header {
-        height: 50px;
+        height: 40px;
     }
 
     .deck h1 {
@@ -96,6 +96,11 @@
         right: 20px;
         top: 10px;
         cursor: pointer;
+        transform: scaleY(-1);
+    }
+
+    .deck.collapsed .collapser {
+        transform: scaleY(1);
     }
 
     .deck hr {
@@ -103,7 +108,7 @@
     }
 
     .deck .card-holder {
-        height: calc(100% - 70px);
+        height: calc(100% - 50px);
         padding: 10px 10px;
         overflow-x: auto;
         min-width: 100%;
