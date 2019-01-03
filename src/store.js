@@ -53,6 +53,9 @@ export default new Vuex.Store({
     },
     defrostDeck: (state, payload) => {
       state.frozenDeck = false;
+    },
+    replenishDeck: (state, payload) => {
+      state.deck.push(payload[0]);
     }
   },
   actions: {
@@ -85,6 +88,9 @@ export default new Vuex.Store({
     },
     DEFROST_DECK: (context, payload) => {
       context.commit("defrostDeck", payload);
+    },
+    REPLENISH_DECK: (context, payload) => {
+      context.commit("replenishDeck", payload);
     }
   }
 })

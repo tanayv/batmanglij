@@ -88,8 +88,21 @@
         else
           this.UPDATE_USER_CZAR_STATUS(false);
       },
+      replenishDeck: function() {
+        axios.get("/api/draw/white/single")
+          .then(
+            response => {
+              console.log("Cards Drawn", response);
+              this.REPLENISH_DECK(response.data);
+            }
+          ).catch(
+            error => {
+              console.log("Error drawing cards", error);
+            }
+          )
+      },
       ...mapActions(['SET_BLACK_CARD', 'STORE_USER_DATA', 'RENDER_WHITE_CARD', 'STORE_DECK', 'STORE_PLAYER_LIST',
-      'UPDATE_USER_CZAR_STATUS', 'DEFROST_DECK'])
+      'UPDATE_USER_CZAR_STATUS', 'DEFROST_DECK', 'REPLENISH_DECK'])
     },
     sockets: {
       UPDATE_UI: function (data) {
