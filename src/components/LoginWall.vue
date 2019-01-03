@@ -58,7 +58,7 @@ export default {
         border-radius: 3px;
         padding: 10px;
         outline: none !important;
-        margin-bottom: 10px;
+        margin-bottom: 30px;
         font-family: "Avenir", Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
